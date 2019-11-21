@@ -1,0 +1,85 @@
+package Lesson1;
+
+public class cat {
+    private String color;
+    private String breed;
+    private double weight;
+    private int age;
+    private String character;
+
+    public cat(String color, String breed, double weight, int age, String character) {
+        this.color = color;
+        this.breed = breed;
+        this.weight = weight;
+        this.age = age;
+        this.character = character;
+    }
+    public cat(){
+        super();
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public String getBreed() {
+        return breed;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
+    }
+
+    @Override
+    public String toString() {
+        return "cat{" +
+                "color='" + color + '\'' +
+                ", breed='" + breed + '\'' +
+                ", weight=" + weight +
+                ", age=" + age +
+                ", character='" + character + '\'' +
+                '}';
+    }
+}
+//main
+package Lesson1;
+
+public class main {
+    public static void main (String[] args){
+        cat cat = new cat();
+        cat.setColor("White");
+        cat.setWeight(10);
+        cat.setBreed("Brithish");
+        cat.setCharacter("Good");
+        cat.setAge(9);
+        System.out.println(cat);
+    }
+}
