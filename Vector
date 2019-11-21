@@ -1,0 +1,93 @@
+package Lesson1;
+
+public class main {
+    public static void main (String[] args){
+        vector vector1 = new vector(1, -4, 2);
+        vector vector2 = new vector(2, 3, -7);
+        vector vectorSum = vector1.sum(vector2);
+        System.out.println(vectorSum);
+        double scalar = vector1.scalarProduct(vector2);
+        System.out.println(scalar);
+        vector vectorProd = vector1.vectorProduct(vector2);
+        System.out.println(vectorProd);
+    }
+}
+package Lesson1;
+
+public class vector {
+    private double x;
+    private double y;
+    private double z;
+
+    public vector(double x, double y, double z) {
+        super();
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    public vector() {
+        super();
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setZ(double z) {
+        this.z = z;
+    }
+ // сложение векторов
+    public vector sum(vector vector) {
+
+        vector sum = new vector();
+
+        sum.setX(x + vector.x);
+        sum.setY(y + vector.y);
+        sum.setZ(z + vector.z);
+
+        return sum;
+    }
+    //скалярное произведение
+    public double scalarProduct(vector vector) {
+
+        double scalar = x * vector.x + y * vector.y + z * vector.z;
+
+        return scalar;
+    }
+    // векторное произведение
+    public vector vectorProduct(vector vector) {
+
+        vector vectorProd = new vector();
+
+        vectorProd.setX(y * vector.z - z * vector.y);
+        vectorProd.setY(z * vector.x - x * vector.z);
+        vectorProd.setZ(x * vector.y - y * vector.x);
+
+        return vectorProd;
+    }
+
+    @Override
+    public String toString() {
+        return "vector{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
+}
