@@ -1,0 +1,203 @@
+//////////////////Main file//////////////////
+package lesson2;
+
+public class lesson2 {
+     public static void main(String[] args) {
+     Shape circle = new Circle(new Point(1, 3), new Point(2, 6));
+     Shape rectangular = new Rectangular(new Point(3,4), new Point(0,2));
+     Shape triangle = new Triangle(new Point(1,2), new Point(5,6), new Point(4,9));
+     System.out.println(circle);
+     System.out.println(rectangular);
+     System.out.println(triangle);
+    }
+}
+//////////////////Class Point//////////////////
+package lesson2;
+
+public class Point {
+    private double x;
+    private double y;
+
+    public Point(double x, double y) {
+        super();
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+    public static double calculateDistance(Point a, Point b) {
+        return Math.sqrt((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y));
+    }
+
+    @Override
+    public String toString() {
+        return "Point{" + "x=" + x +", y=" + y +'}';
+    }
+}
+//////////////////Class Shape//////////////////
+package lesson2;
+
+public abstract class Shape {
+    abstract double calculatePerimetr();
+    abstract double calculateArea();
+}
+//////////////////Class Rectangular//////////////////
+package lesson2;
+
+public class Rectangular extends Shape {
+    private Point side1;
+    private Point side2;
+
+    public Rectangular(Point side1, Point side2) {
+        super();
+        this.side1 = side1;
+        this.side2 = side2;
+    }
+    public Rectangular(){
+        super();
+    }
+
+    public Point getSide1() {
+        return side1;
+    }
+
+    public Point getSide2() {
+        return side2;
+    }
+
+    public void setSide1(Point side1) {
+        this.side1 = side1;
+    }
+
+    public void setSide2(Point side2) {
+        this.side2 = side2;
+    }
+    @Override
+    double calculatePerimetr(){
+      return 2*(Point.calculateDistance(side1,side2) + Point.calculateDistance(side2,side1));
+    }
+    @Override
+    double calculateArea(){
+        return Point.calculateDistance(side2,side1)*Point.calculateDistance(side1, side2);
+    }
+    @Override
+    public String toString() {
+        return "Rectangular [side1= " + side1 + ", side2= " + side2 + ", calculatePerimetr()= " + calculatePerimetr() + ", calculateArea()= "
+                + calculateArea() + "]";
+    }
+}
+//////////////////Class Triangle//////////////////
+package lesson2;
+
+public class Triangle extends Shape {
+    private Point sideA;
+    private Point sideB;
+    private Point sideC;
+
+    public Triangle(Point sideA, Point sideB, Point sideC) {
+        super();
+        this.sideA = sideA;
+        this.sideB = sideB;
+        this.sideC = sideC;
+    }
+    public Triangle(){
+        super();
+    }
+
+    public Point getSideA() {
+        return sideA;
+    }
+
+    public Point getSideB() {
+        return sideB;
+    }
+
+    public Point getSideC() {
+        return sideC;
+    }
+
+    public void setSideA(Point sideA) {
+        this.sideA = sideA;
+    }
+
+    public void setSideB(Point sideB) {
+        this.sideB = sideB;
+    }
+
+    public void setSideC(Point sideC) {
+        this.sideC = sideC;
+    }
+    @Override
+    double calculatePerimetr(){
+        return Point.calculateDistance(sideA,sideB) + Point.calculateDistance(sideB,sideC) + Point.calculateDistance(sideC, sideA);
+    }
+    @Override
+    double calculateArea(){
+        double p = (Point.calculateDistance(sideA,sideB) + Point.calculateDistance(sideB,sideC) + Point.calculateDistance(sideC, sideA))/2;
+        return Math.sqrt(p*((p - Point.calculateDistance(sideA,sideB))*(p-Point.calculateDistance(sideB,sideC))*(p-Point.calculateDistance(sideC, sideA))));
+    }
+    public String toString() {
+        return "Triangle [sideA= " + sideA + ", sideB= " + sideB + ", sideC= " + sideC + ", calculatePerimetr()= " + calculatePerimetr() + ", calculateArea()= "
+                + calculateArea() + "]";
+    }
+}
+//////////////////Class Circle//////////////////
+package lesson2;
+
+public class Circle extends Shape {
+    private Point radius;
+    private Point center;
+
+    public Circle(Point radius,Point center) {
+        super();
+        this.radius = radius;
+        this.center = center;
+    }
+    public Circle(){
+        super();
+    }
+
+    public Point getRadius() {
+        return radius;
+    }
+
+    public Point getCenter() {
+        return center;
+    }
+
+    public void setRadius(Point radius) {
+        this.radius = radius;
+    }
+
+    public void setCenter(Point center) {
+        this.center = center;
+    }
+    @Override
+    public double calculatePerimetr() {
+        return 2 * Math.PI * Point.calculateDistance(center, radius);
+    }
+    @Override
+    public double calculateArea() {
+        return Math.PI * Math.pow(Point.calculateDistance(center, radius), 2);
+    }
+
+    @Override
+    public String toString() {
+        return "Circle [radius= " + radius + ", center= " + center + ", calculatePerimetr()= " + calculatePerimetr() + ", calculateArea()= "
+                + calculateArea() + "]";
+    }
+}
