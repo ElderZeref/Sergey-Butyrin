@@ -1,0 +1,422 @@
+/////// Main ///////
+package Homework4;
+import Homework4.MyException.MyException;
+
+public class Main {
+    public static void main(String[] args) throws MyException {
+        Group gr = new Group("Stardust");
+        try {
+            gr.addStudent(new Student("Джостар", "Джонатан", 98, true, 568427, "Stardust"));
+            gr.addStudent(new Student("Джостар", "Джозеф", 45, true, 568428, "Stardust"));
+            gr.addStudent(new Student("Куджо", "Джотаро", 18, true, 568429, "Stardust"));
+            gr.addStudent(new Student("Джованни", "Джорно", 27, true, 568421, "Stardust"));
+            gr.addStudent(new Student("Лиза", "Лиза", 18, false, 568427, "Stardust"));
+            gr.addStudent(new Student("Цеппелин", "Цезарь", 67, false, 568427, "Stardust"));
+            gr.addStudent(new Student("Цеппелин", "Карго", 46, false, 568327, "Stardust"));
+            gr.addStudent(new Student("Бучеллати", "Бруно", 34, true, 561427, "Stardust"));
+            gr.addStudent(new Student("Нориаки", "Какьёин", 16, false, 568422, "Stardust"));
+        } catch (MyException e) {
+            System.out.println(e.getMessage());
+        }
+        System.out.println(gr);
+        System.out.println();
+        Student[] recruterArray = gr.getSoldier();
+        for (Student student : recruterArray) {
+            System.out.println("Ну шо сказать.. Тяжела жизнь солдата... " + student);
+        }
+    }
+}
+/////// Human ///////
+package Homework4;
+
+public class Human {
+    private String surname;
+    private String name;
+    private int age;
+    private boolean gender;
+
+    public Human(String surname, String name, int age, boolean gender) {
+        this.surname = surname;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+
+    }
+
+    public Human() {
+        // super();
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public boolean isGender() {
+        return gender;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+
+    @Override
+    public String toString() {
+        return  "surname='" + surname + '\'' + ", name='" + name + '\'' + ", age=" + age + ", gender="
+                + gender + '}';
+    }
+}
+/////// Student ///////
+package Homework4;
+
+public class Student extends Human {
+    private long zachentka;
+    private String group;
+
+    public Student(String surname, String name, int age, boolean gender, long numbRecordbook, String group) {
+        super(surname, name, age, gender);
+        this.zachentka = numbRecordbook;
+        this.group = group;
+    }
+
+    public Student() {
+        super();
+    }
+
+    public long getNumbRecordbook() {
+        return zachentka;
+    }
+
+    public void setNumbRecordbook(long numbRecordbook) {
+        this.zachentka = numbRecordbook;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    @Override
+    public String toString() {
+        return "Student {" + "zachentka=" + zachentka + ", group='" + group + '\'' + ", " + super.toString();
+    }
+}
+/////// StudentComparator ///////
+package Homework4;
+
+import java.util.Comparator;
+
+public class StudentComparator implements Comparator {
+    private int i = 0;
+    private boolean forward = true;
+
+    public StudentComparator(int i) {
+        this.i = i;
+    }
+
+    public StudentComparator(int i, boolean forward) {
+        this.i = i;
+        this.forward = forward;
+    }
+
+    public int getI() {
+        return i;
+    }
+
+    public void setI(int i) {
+        this.i = i;
+    }
+
+    @Override
+    public int compare(Object a, Object b) {
+        int n = (this.forward) ? 1 : -1;
+
+        if (a != null && b == null) {
+            return 1;
+        }
+        if (a == null && b != null) {
+            return -1;
+        }
+        if (a == null && b == null) {
+            return 0;
+        }
+        Student studentOne = (Student) a;
+        Student studentTwo = (Student) b;
+        switch (this.i) {
+            case 0:
+                return (studentOne.getSurname().compareTo(studentTwo.getSurname())) * n;
+            case 1:
+                return (studentOne.getName().compareTo(studentTwo.getName())) * n;
+            case 2:
+                return (studentOne.getAge() - studentTwo.getAge()) * n;
+            case 3:
+                return ((studentOne.isGender()) ? 1 : -1) * n;
+            case 4:
+                return ((studentOne.getNumbRecordbook() > studentTwo.getNumbRecordbook()) ? 1 : -1) * n;
+            case 5:
+                return (studentOne.getGroup().compareTo(studentTwo.getGroup())) * n;
+        }
+        return 0;
+    }
+}
+/////// MyException ///////
+package Homework4.MyException;
+
+public class MyException extends Exception {
+
+    @Override
+    public String getMessage() {
+        return "Группа переполнена!";
+    }
+}
+/////// Group ///////
+package Homework4;
+import java.util.Arrays;
+import Homework4.MyException.MyException;
+import javax.swing.JOptionPane;
+
+public class Group implements Voenkom {
+    private Student[] studentsArray = new Student[10];
+    private String groupName;
+
+    public Group() {
+        super();
+        this.groupName = "unknow";
+    }
+
+    public Group(String groupName) {
+        super();
+        this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void addStudentInteractive() throws MyException {
+        try {
+            String surName = getSurname("Введите фамилию студента:");
+            String name = getName("Введите имя студента:");
+            int age = getAge();
+            boolean sex = getGender("М или Ж?");
+            long numbRecordbook = getNumbRecordbook("Введите номер зачетной книжки студента");
+            String group = this.groupName;
+            Student st = new Student(surName, name, age, sex, numbRecordbook, group);
+            this.addStudent(st);
+        } catch (NullPointerException e) {
+            System.out.println("Операция отменена");
+            return;
+        }
+    }
+
+    public void addStudent(Student student) throws MyException {
+        if (student == null) {
+            throw new IllegalArgumentException("Студентов нет");
+        }
+        for (int i = 0; i < studentsArray.length; i++) {
+            if (studentsArray[i] == null) {
+                student.setGroup(this.groupName);
+                studentsArray[i] = student;
+                return;
+            }
+        }
+        throw new MyException();
+    }
+
+    public Student search(String surName) {
+        for (Student student : studentsArray) {
+            if (student != null && student.getSurname().equals(surName)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public Student searchName(String name) {
+        for (Student student : studentsArray) {
+            if (student != null && student.getName().equals(name)) {
+                return student;
+            }
+        }
+        return null;
+    }
+
+    public boolean deleteStudent(long number) {
+        for (int i = 0; i < studentsArray.length; i++) {
+            if (studentsArray[i] != null && studentsArray[i].getNumbRecordbook() == number) {
+
+                studentsArray[i] = null;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void sort() {
+        for (int i = 0; i < studentsArray.length - 1; i++) {
+            for (int j = i + 1; j < studentsArray.length; j++) {
+                if (compareStudent(studentsArray[i], studentsArray[j]) > 0) {
+                    Student temp = studentsArray[i];
+                    studentsArray[i] = studentsArray[j];
+                    studentsArray[j] = temp;
+                }
+            }
+        }
+    }
+
+    private int compareStudent(Student a, Student b) {
+        if (a != null && b == null) {
+            return 1;
+        }
+        if (a == null && b != null) {
+            return -1;
+        }
+        if (a == null && b == null) {
+            return 0;
+        }
+        return a.getSurname().compareTo(b.getSurname());
+    }
+
+    private String getSurname(String message) throws NullPointerException {
+        boolean done = false;
+        String surname = "";
+        for (; !done;) {
+            try {
+                surname = JOptionPane.showInputDialog(message);
+                done = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showInternalMessageDialog(null, "Недопустимый формат");
+            }
+        }
+        return surname;
+    }
+
+    private int getAge() throws NullPointerException {
+        boolean done = false;
+        int age = 0;
+        for (; !done;) {
+            try {
+                age = Integer.valueOf(JOptionPane.showInputDialog("Введите возраст студента"));
+                done = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showInternalMessageDialog(null, "Нельзя так ");
+            }
+        }
+        return age;
+    }
+
+    private String getName(String message) throws NullPointerException {
+        boolean done = false;
+        String name = "";
+        for (; !done;) {
+            try {
+                name = JOptionPane.showInputDialog(message);
+                done = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showInternalMessageDialog(null, "Недопустимый формат");
+            }
+        }
+        return name;
+    }
+
+    private boolean getGender(String message) throws NullPointerException {
+        boolean done = false;
+        boolean name = false;
+        for (; !done;) {
+            try {
+                name = JOptionPane.showInputDialog(message).equals("М");
+                done = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showInternalMessageDialog(null, "Недопустимый формат");
+            }
+        }
+        return name;
+    }
+
+    private long getNumbRecordbook(String message) throws NullPointerException {
+        boolean done = false;
+        long name = 0;
+        for (; !done;) {
+            try {
+                name = Long.valueOf(JOptionPane.showInputDialog(message));
+                done = true;
+            } catch (NumberFormatException e) {
+                JOptionPane.showInternalMessageDialog(null, "Недопустимый формат");
+            }
+        }
+        return name;
+    }
+
+    @SuppressWarnings("не проверенно")
+    public void sortByParametr(int i) {
+        Arrays.sort(this.studentsArray, new StudentComparator(i));
+    }
+
+    @SuppressWarnings("не проверенно")
+    public void sortByParametr(int i, boolean forward) {
+        Arrays.sort(this.studentsArray, new StudentComparator(i, forward));
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Группа: " + this.groupName).append(System.lineSeparator());
+        int i = 0;
+        sort();
+        for (Student student : studentsArray) {
+            if (student != null) {
+                sb.append((++i) + ") ").append(student);
+                sb.append(System.lineSeparator());
+            }
+        }
+        return sb.toString();
+    }
+
+    public Student[] getSoldier() {
+        int n = 0;
+        for (Student student : studentsArray) {
+            if (student != null && student.isGender() && student.getAge() >= 18) {
+                n += 1;
+            }
+        }
+        Student[] soldierArray = new Student[n];
+        int i = 0;
+        for (Student student : this.studentsArray) {
+            if (student != null && student.isGender() && student.getAge() >= 18) {
+                soldierArray[i++] = student;
+            }
+        }
+        return soldierArray;
+    }
+
+}
+
+
+
+
