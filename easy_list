@@ -1,0 +1,23 @@
+package Lesson9b;
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args){
+        List<String> list1 = new ArrayList<>();
+        list1.add("Pillar");
+        list1.add("Pan");
+        list1.add("Awaken");
+        list1.add("Coldsnap");
+        list1.add("Yare yare");
+        list1.add("Lord");
+        list1.add("Zeref");
+        list1.add("Dunmer");
+        list1.add("Orc");
+        list1.add("Hello");
+        list1.remove(0);
+        list1.remove(0);
+        list1.remove(7);
+        System.out.println(list1);
+    }
+}
